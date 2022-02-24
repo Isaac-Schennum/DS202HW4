@@ -1,0 +1,71 @@
+---
+title: 'Homework #4'
+author: "Isaac Schennum (I don't have a team)"
+repo: "https://github.com/Isaac-Schennum/DS202HW4"
+date: "2/23/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+choco <- read.csv("https://ds202-at-isu.github.io/labs/data/choco.csv")
+str(choco)
+head(choco, 10)
+tail(choco, 10)
+summary(choco)
+dim(choco)
+```
+
+In this dataset, 1852 chocolate bars were rated. See summary(choco) and dim(choco) output.
+
+```{r}
+ggplot(choco, aes(x = Review.Date)) + geom_bar()
+```
+
+The reviews were taken between 2006 and 2017. The distribution is unimodal, with the peak number of ratings occurring in 2015. The number of reviews increases somewhat steadily from 2006 until 2015, at which point the number of reviews heavily drops off.
+
+```{r}
+ggplot(choco, aes(x = Rating)) + geom_histogram(bins = 17)
+```
+
+The ratings distribution is approximately normal, with a center around 3.25 and diminishing tails on both ends. The tail on the left is more pronounced, with a small but noticeable number of ratings between 1.5 and 2.25. There a few outlier ratings of 1 and 5.
+
+```{r}
+ggplot(data = choco, aes(x = Cocoa.Pct, y = Rating)) + geom_jitter()
+```
+
+There doesn't appear to be a relationship between ratings and cocoa percentages, given that there's no apparent trend line on the scatterplot (the points seem to be scattered mostly randomly).
+
+##```{r}
+##write('PATH="${RTOOLS40_HOME}\\usr\\bin;${PATH}"', file = "~/.Renviron", append = TRUE)
+##```
+##```{r}
+##Sys.make("make")
+##```
+##```{r}
+##install.packages("https://cran.r-project.org/src/contrib/Archive/rlang/rlang_1.0.0.tar.gz", ##repo=NULL, type="source")
+##```
+##```{r}
+##top3 <- dplyr::filter(choco, Company.Location %in% c("U.S.A.", "France", "Canada"))
+##```
+##```{r}
+##library(ggmosaic)
+##ggplot(data = choco) +
+##  geom_mosaic(aes(x = product(Company.Location), fill = Rating, weight = 1))
+##```
+
+I installed R version 4.1.2 but it looks like it says I only have 0.4.12. I tried fixing it but I can't figure it out. Unfortunately, I don't have time to get it to work so I can't answer question 3 on the problem set.
+
+Investigative question: Which countries are most represented in this sample of rated chocolate bin terms of where the beans originate?
+
+```{r}
+ggplot(choco, aes(x = Company.Location)) + geom_bar() + coord_flip()
+```
+
+Conclusion: A very large portion of chocolate bars were manufactured by a company in the USA. This amount is around 5 times higher than the next highest country, France. In general, countries with a high number of chocolate bars being manufactured in them tend to be more well off countries. This is seen in that the UK, Italy, France, Canada, Switzerland, and Australia all have relatively high levels of chocolate manufacturing. The only notable exception is Ecuador, which has somewhat high production but is not as well off as the other countries listed.
+
+The workflow of examining data was smooth, interesting, and enjoyable when I didn't have random problems importing packages. It's annoying when it feels like the problems I'm experiencing aren't my fault (I feel like version 4.1.2 or R is being treated as version 0.4.12 for some reason), and trying to work out those problems in limited time was frustrating. Otherwise, it was fun to mess around with various graphs to get a better view of the data. I hope I can become more familiar with the features of ggplot2 in the future, since there are a few things I wanted to do that I didn't know how to do (such as making the plot with all the countries taller so the text doesn't overlap itself).
